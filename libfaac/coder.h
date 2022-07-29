@@ -22,6 +22,8 @@
 #ifndef CODER_H
 #define CODER_H
 
+#define LIBFAAC_ENABLE_MEM_REDUCE
+
 #ifdef __cplusplus
 extern "C" {
 #endif /* __cplusplus */
@@ -32,7 +34,11 @@ extern "C" {
 /* Allow encoding of Digital Radio Mondiale (DRM) with transform length 1024 */
 //#define DRM_1024
 
+#ifdef LIBFAAC_ENABLE_MEM_REDUCE
+#define MAX_CHANNELS 1
+#else
 #define MAX_CHANNELS 64
+#endif 
 
 #ifdef DRM
 #ifdef DRM_1024
@@ -148,7 +154,9 @@ typedef struct {
 #endif
 
     TnsInfo tnsInfo;
+#ifndef LIBFAAC_ENABLE_MEM_REDUCE
     BwpInfo bwpInfo;
+#endif 
 } CoderInfo;
 
 typedef struct {
